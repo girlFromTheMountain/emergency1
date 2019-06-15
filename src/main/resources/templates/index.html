@@ -23,6 +23,10 @@
 
         webSocket.onmessage = function(ev){
             var messages = document.getElementById("messages");
+            if(ev.data.startsWith("<server>")){
+                 messages.innerHTML = messages.innerHTML + "<li style='color: red'>" + ev.data.replace("<server>", "") + "</li>";
+                 return;
+            }
             messages.innerHTML = messages.innerHTML + "<li>" + ev.data + "</li>";
         };
 

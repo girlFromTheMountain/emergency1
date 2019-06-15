@@ -32,14 +32,14 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
         User user = new User(session);
         sessions.add(user);
 
-        user.sendMessage("Witaj na naszym chacie! Twoja pierwsza wiadomość będzie Twoim nickiem!");
+        user.sendMessage("<server>Witaj na naszym chacie! Twoja pierwsza wiadomość będzie Twoim nickiem!");
         sendWelcomeMessageToAllWithoutMe(session);
     }
 
     private void sendWelcomeMessageToAllWithoutMe(WebSocketSession session) throws IOException {
         for (User user : sessions) {
             if(!user.getWebSocketSession().getId().equals(session.getId())){
-                user.sendMessage("Nowy kolega dołączył do chatu!");
+                user.sendMessage("<server>Nowy kolega dołączył do chatu!");
             }
         }
     }
@@ -49,7 +49,7 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
         User sender = findUserBySession(session);
         if(sender.getNickname() == null){
             sender.setNickname(message.getPayload());
-            sender.sendMessage("Ustawiłeś swój nickname!");
+            sender.sendMessage("<server>Ustawiłeś swój nickname!");
             return;
         }
 
