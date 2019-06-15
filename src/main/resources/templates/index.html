@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <center>
+        <h1 id="info">Połączenie zamknięte</h1>
+        <ul id="messages"></ul>
+
+        <form onsubmit="sendMessage(); return false;" action="#">
+            <input id="message_to_send" type="text">
+            <button type="submit">Wyślij</button>
+        </form>
+    </center>
+    <script>
+        var webSocket = new WebSocket("ws://localhost:8080/chat");
+        webSocket.onopen = function(ev) {
+             console.log("otwarto połączenie");
+             document.getElementById("info").innerHTML = "Połączenie otwarte!";
+        };
+
+        webSocket.onmessage = function(ev){
+            var messages = document.getElementById("messages");
+            messages.innerHTML = messages.innerHTML + "<li>" + ev.data + "</li>";
+        };
+
+        function sendMessage() {
+           var messageObject = document.getElementById("message_to_send");
+           var message = messageObject.value;
+
+           messageObject.value = "";
+           webSocket.send(message);
+        }
+    </script>
+</body>
+</html>
