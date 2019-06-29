@@ -47,6 +47,7 @@ public class ChatSocket extends TextWebSocketHandler implements WebSocketConfigu
     @Override
     protected void handleTextMessage(WebSocketSession session, TextMessage message) throws Exception {
         User sender = findUserBySession(session);
+
         if(sender.getNickname() == null){
             sender.setNickname(message.getPayload());
             sender.sendMessage("<server>Ustawiłeś swój nickname!");
